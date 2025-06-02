@@ -128,6 +128,16 @@ public class TelaPrincipal extends JFrame {
         JPanel painel = new JPanel(new BorderLayout());
         painel.add(scroll, BorderLayout.CENTER);
 
+        JPanel painelBotoes = gerarPainelComBotoes(series, tabela);
+        painel.add(painelBotoes, BorderLayout.SOUTH);
+
+        if (series != null && !series.isEmpty()) {
+            preencherTabela(modelo, series);
+        }
+        return painel;
+    }
+
+    private JPanel gerarPainelComBotoes(List<Serie> series, JTable tabela) {
         JButton botaoRemover = new JButton("Remover");
         botaoRemover.addActionListener(e -> {
             int linha = tabela.getSelectedRow();
@@ -147,12 +157,7 @@ public class TelaPrincipal extends JFrame {
 
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         painelBotoes.add(botaoRemover);
-        painel.add(painelBotoes, BorderLayout.SOUTH);
-
-        if (series != null && !series.isEmpty()) {
-            preencherTabela(modelo, series);
-        }
-        return painel;
+        return painelBotoes;
     }
 
     private void preencherTabela(DefaultTableModel modelo, List<Serie> series) {
@@ -227,7 +232,7 @@ public class TelaPrincipal extends JFrame {
             String nomeSerie = (String) tabelaResultados.getValueAt(linha, 0);
             List<Serie> series = servicoTVMaze.buscarSeries(nomeSerie);
             if (!series.isEmpty()) {
-                Serie serie = series.get(0);
+                Serie serie = series.getFirst();
                 switch (lista) {
                     case CategoriaSeries.FAVORITOS:
                         usuario.adicionarSerieFavorita(serie);
