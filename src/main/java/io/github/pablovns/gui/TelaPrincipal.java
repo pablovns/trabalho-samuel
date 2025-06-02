@@ -1,5 +1,6 @@
 package io.github.pablovns.gui;
 
+import io.github.pablovns.modelo.CategoriaSeries;
 import io.github.pablovns.modelo.Serie;
 import io.github.pablovns.modelo.Usuario;
 import io.github.pablovns.persistencia.GerenciadorPersistencia;
@@ -16,8 +17,8 @@ import java.util.List;
 
 public class TelaPrincipal extends JFrame {
     private final Usuario usuario;
-    private final ServicoTVMaze servicoTVMaze;
-    private final GerenciadorPersistencia gerenciadorPersistencia;
+    private final transient ServicoTVMaze servicoTVMaze;
+    private final transient GerenciadorPersistencia gerenciadorPersistencia;
     
     private JTextField campoBusca;
     private JTable tabelaResultados;
@@ -38,7 +39,7 @@ public class TelaPrincipal extends JFrame {
 
     private void configurarJanela() {
         setTitle("Gerenciador de Séries - " + usuario.getNome());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
     }
@@ -105,9 +106,9 @@ public class TelaPrincipal extends JFrame {
 
         // Configurar eventos dos botões
         botaoBuscar.addActionListener(e -> buscarSeries());
-        botaoFavoritar.addActionListener(e -> adicionarSerieSelecionada("favoritos"));
-        botaoAssistido.addActionListener(e -> adicionarSerieSelecionada("assistidas"));
-        botaoParaAssistir.addActionListener(e -> adicionarSerieSelecionada("paraAssistir"));
+        botaoFavoritar.addActionListener(e -> adicionarSerieSelecionada(CategoriaSeries.FAVORITOS));
+        botaoAssistido.addActionListener(e -> adicionarSerieSelecionada(CategoriaSeries.ASSISTIDAS));
+        botaoParaAssistir.addActionListener(e -> adicionarSerieSelecionada(CategoriaSeries.PARA_ASSISTIR));
         comboOrdenacao.addActionListener(e -> ordenarLista());
     }
 
@@ -201,15 +202,21 @@ public class TelaPrincipal extends JFrame {
                     serie.getEmissora()
                 });
             }
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            JOptionPane.showMessageDialog(this,
+                    "Operação interrompida: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }catch (Exception e) {
             JOptionPane.showMessageDialog(this, 
                 "Erro ao buscar séries: " + e.getMessage(),
                 "Erro",
                 JOptionPane.ERROR_MESSAGE);
         }
     }
-
-    private void adicionarSerieSelecionada(String lista) {
+    
+    private void adicionarSerieSelecionada(CategoriaSeries lista) {
         int linha = tabelaResultados.getSelectedRow();
         if (linha == -1) {
             JOptionPane.showMessageDialog(this, "Selecione uma série primeiro!");
@@ -222,19 +229,25 @@ public class TelaPrincipal extends JFrame {
             if (!series.isEmpty()) {
                 Serie serie = series.get(0);
                 switch (lista) {
-                    case "favoritos":
+                    case CategoriaSeries.FAVORITOS:
                         usuario.adicionarSerieFavorita(serie);
                         break;
-                    case "assistidas":
+                    case CategoriaSeries.ASSISTIDAS:
                         usuario.adicionarSerieAssistida(serie);
                         break;
-                    case "paraAssistir":
+                    case CategoriaSeries.PARA_ASSISTIR:
                         usuario.adicionarSerieParaAssistir(serie);
                         break;
                 }
                 carregarListas();
                 salvarDados();
             }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            JOptionPane.showMessageDialog(this,
+                "Operação interrompida: " + e.getMessage(),
+                "Erro",
+                JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, 
                 "Erro ao adicionar série: " + e.getMessage(),

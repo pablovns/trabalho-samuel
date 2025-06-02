@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import io.github.pablovns.modelo.Serie;
+import io.github.pablovns.util.Constantes;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -18,7 +19,7 @@ import java.util.List;
  * Classe responsável por fazer as requisições à API do TVMaze.
  */
 public class ServicoTVMaze {
-    private static final String URL_BASE = "https://api.tvmaze.com";
+    private static final String URL_BASE = Constantes.URL_BASE_TVMAZE;
     private final HttpClient cliente;
     private final Gson gson;
 

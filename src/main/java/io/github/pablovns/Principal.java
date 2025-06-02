@@ -38,14 +38,7 @@ public class Principal {
                     }
 
                     usuario = new Usuario(nome.trim());
-                    try {
-                        gerenciador.salvarUsuario(usuario);
-                    } catch (IOException e) {
-                        JOptionPane.showMessageDialog(null,
-                            "Erro ao salvar dados do usuário: " + e.getMessage(),
-                            "Erro",
-                            JOptionPane.ERROR_MESSAGE);
-                    }
+                    salvarNovoUsuario(gerenciador, usuario);
                 }
 
                 TelaPrincipal telaPrincipal = new TelaPrincipal(usuario);
@@ -58,5 +51,16 @@ public class Principal {
                 System.exit(1);
             }
         });
+    }
+
+    private static void salvarNovoUsuario(GerenciadorPersistencia gerenciador, Usuario usuario) {
+        try {
+            gerenciador.salvarUsuario(usuario);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Erro ao salvar dados do usuário: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 } 

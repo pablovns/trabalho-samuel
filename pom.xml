@@ -8,8 +8,7 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>trabalho-samuel</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <url>https://github.com/pablovns/trabalho-samuel</url>
 
   <properties>
     <maven.compiler.source>21</maven.compiler.source>

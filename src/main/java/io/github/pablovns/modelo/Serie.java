@@ -1,14 +1,16 @@
 package io.github.pablovns.modelo;
 
 import com.google.gson.annotations.SerializedName;
+import io.github.pablovns.util.Constantes;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 /**
  * Classe que representa uma série de TV.
  */
-public class Serie {
+public class Serie implements Serializable {
     @SerializedName("id")
     private int id;
 
@@ -43,7 +45,7 @@ public class Serie {
     private Image imagem;
 
     // Classes internas para mapeamento do JSON
-    public static class Rating {
+    public static class Rating implements Serializable {
         @SerializedName("average")
         private Double average;
 
@@ -52,16 +54,16 @@ public class Serie {
         }
     }
 
-    public static class Network {
+    public static class Network implements Serializable {
         @SerializedName("name")
         private String name;
 
         public String getName() {
-            return name != null ? name : "Não informado";
+            return name != null ? name : Constantes.NAO_INFORMADO;
         }
     }
 
-    public static class Image {
+    public static class Image implements Serializable {
         @SerializedName("medium")
         private String medium;
 
@@ -100,7 +102,7 @@ public class Serie {
     }
 
     public String getIdioma() {
-        return idioma != null ? idioma : "Não informado";
+        return idioma != null ? idioma : Constantes.NAO_INFORMADO;
     }
 
     public List<String> getGeneros() {
@@ -112,7 +114,7 @@ public class Serie {
     }
 
     public String getEstado() {
-        return estado != null ? estado : "Não informado";
+        return estado != null ? estado : Constantes.NAO_INFORMADO;
     }
 
     public LocalDate getDataEstreia() {
@@ -132,7 +134,7 @@ public class Serie {
     }
 
     public String getEmissora() {
-        return emissora != null ? emissora.getName() : "Não informado";
+        return emissora != null ? emissora.getName() : Constantes.NAO_INFORMADO;
     }
 
     public String getResumo() {

@@ -2,13 +2,14 @@ package io.github.pablovns.modelo;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Classe que representa um usuário do sistema.
  */
-public class Usuario {
+public class Usuario implements Serializable {
     @SerializedName("nome")
     private String nome;
 

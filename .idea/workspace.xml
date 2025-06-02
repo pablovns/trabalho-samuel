@@ -18,15 +18,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="762db864-5dc6-4e93-ab89-52a3facca6ec" name="Changes" comment="Initial commit">
-      <change afterPath="$PROJECT_DIR$/dados_usuario.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="762db864-5dc6-4e93-ab89-52a3facca6ec" name="Changes" comment="refactor: substituir org.json por Gson para manipulação de JSON&#10;&#10;Refatoração do código para utilizar Gson na serialização/deserialização de JSONs.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/modelo/CategoriaSeries.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/util/Constantes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/pablovns/Principal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/Principal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/github/pablovns/gui/TelaPrincipal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/gui/TelaPrincipal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/github/pablovns/modelo/Serie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/modelo/Serie.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/github/pablovns/modelo/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/modelo/Usuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/pablovns/persistencia/GerenciadorPersistencia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/persistencia/GerenciadorPersistencia.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/github/pablovns/servico/ServicoTVMaze.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/servico/ServicoTVMaze.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -41,36 +41,59 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "pablovns"
+  }
 }]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/pablovns/trabalho-samuel.git",
+    "accountId": "e4f1588f-dd47-4677-85da-71531ee49771"
+  }
+}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2xsgMj7XZQGfcWFjXIcabOSXkB9" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.Principal.executor": "Debug",
-    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "junie.onboarding.icon.badge.shown": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.tabs"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.Principal.executor&quot;: &quot;Debug&quot;,
+    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.tabs&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="io.github.pablovns" />
@@ -92,6 +115,7 @@
       <option name="presentableId" value="Default" />
       <updated>1748732149151</updated>
       <workItem from="1748732150313" duration="3928000" />
+      <workItem from="1748904365220" duration="1175000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <option name="closed" value="true" />
@@ -101,23 +125,32 @@
       <option name="project" value="LOCAL" />
       <updated>1748734212811</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="refactor: substituir org.json por Gson para manipulação de JSON&#10;&#10;Refatoração do código para utilizar Gson na serialização/deserialização de JSONs.">
+      <option name="closed" value="true" />
+      <created>1748904479379</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1748904479379</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Initial commit" />
     <MESSAGE value="Replace org.json with Gson for JSON processing&#10;&#10;Refactored the codebase to use Gson for JSON serialization and deserialization, replacing org.json. This change improves code readability, simplifies JSON handling, and introduces inner classes for better structured data mapping." />
-    <option name="LAST_COMMIT_MESSAGE" value="Replace org.json with Gson for JSON processing&#10;&#10;Refactored the codebase to use Gson for JSON serialization and deserialization, replacing org.json. This change improves code readability, simplifies JSON handling, and introduces inner classes for better structured data mapping." />
+    <MESSAGE value="Initial commit" />
+    <MESSAGE value="refactor: substituir org.json por Gson para manipulação de JSON&#10;&#10;Refatoração do código para utilizar Gson na serialização/deserialização de JSONs." />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: substituir org.json por Gson para manipulação de JSON&#10;&#10;Refatoração do código para utilizar Gson na serialização/deserialização de JSONs." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/github/pablovns/gui/TelaPrincipal.java</url>
-          <line>91</line>
+          <line>92</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
