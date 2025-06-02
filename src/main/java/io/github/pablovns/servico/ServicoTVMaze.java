@@ -1,15 +1,16 @@
 package io.github.pablovns.servico;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import io.github.pablovns.modelo.Serie;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +20,12 @@ import java.util.List;
 public class ServicoTVMaze {
     private static final String URL_BASE = "https://api.tvmaze.com";
     private final HttpClient cliente;
+    private final Gson gson;
 
     public ServicoTVMaze() {
         this.cliente = HttpClient.newHttpClient();
+        this.gson = new GsonBuilder()
+                .create();
     }
 
     /**
@@ -43,65 +47,26 @@ public class ServicoTVMaze {
     }
 
     private List<Serie> parseResultadoBusca(String json) {
-        List<Serie> series = new ArrayList<>();
-        JSONArray resultados = new JSONArray(json);
-
-        for (int i = 0; i < resultados.length(); i++) {
-            JSONObject resultado = resultados.getJSONObject(i);
-            JSONObject show = resultado.getJSONObject("show");
-            
-            Serie serie = criarSerieDoJSON(show);
-            if (serie != null) {
-                series.add(serie);
-            }
-        }
-
-        return series;
-    }
-
-    private Serie criarSerieDoJSON(JSONObject show) {
         try {
-            int id = show.getInt("id");
-            String nome = show.getString("name");
-            String idioma = show.isNull("language") ? "Não informado" : show.getString("language");
+            Type tipoLista = new TypeToken<List<ResultadoBusca>>(){}.getType();
+            List<ResultadoBusca> resultados = gson.fromJson(json, tipoLista);
             
-            List<String> generos = new ArrayList<>();
-            JSONArray generosJSON = show.getJSONArray("genres");
-            for (int j = 0; j < generosJSON.length(); j++) {
-                generos.add(generosJSON.getString(j));
+            List<Serie> series = new ArrayList<>();
+            for (ResultadoBusca resultado : resultados) {
+                if (resultado.show != null) {
+                    series.add(resultado.show);
+                }
             }
-
-            double nota = show.has("rating") && !show.isNull("rating") ? 
-                         show.getJSONObject("rating").optDouble("average", 0.0) : 0.0;
-
-            String estado = show.isNull("status") ? "Não informado" : show.getString("status");
-            
-            LocalDate dataEstreia = null;
-            if (!show.isNull("premiered")) {
-                dataEstreia = LocalDate.parse(show.getString("premiered"));
-            }
-
-            LocalDate dataTermino = null;
-            if (!show.isNull("ended")) {
-                dataTermino = LocalDate.parse(show.getString("ended"));
-            }
-
-            String emissora = "Não informado";
-            if (!show.isNull("network") && !show.getJSONObject("network").isNull("name")) {
-                emissora = show.getJSONObject("network").getString("name");
-            }
-
-            String resumo = show.isNull("summary") ? "Sem resumo disponível" : 
-                          show.getString("summary").replaceAll("<[^>]*>", "");
-
-            String urlImagem = show.has("image") && !show.isNull("image") ? 
-                             show.getJSONObject("image").optString("medium", "") : "";
-
-            return new Serie(id, nome, idioma, generos, nota, estado, dataEstreia, 
-                           dataTermino, emissora, resumo, urlImagem);
+            return series;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return new ArrayList<>();
         }
     }
-} 
+
+    // Classe auxiliar para deserialização do resultado da busca
+    private static class ResultadoBusca {
+        Serie show;
+    }
+
+}

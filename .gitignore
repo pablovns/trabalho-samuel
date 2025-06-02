@@ -39,6 +39,5 @@ build/
 
 ### Mac OS ###
 .DS_Store
-/dados_usuario.json
 /.mvn/jvm.config
 /.mvn/maven.config

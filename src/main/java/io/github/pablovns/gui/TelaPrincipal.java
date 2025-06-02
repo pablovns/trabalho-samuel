@@ -148,12 +148,18 @@ public class TelaPrincipal extends JFrame {
         painelBotoes.add(botaoRemover);
         painel.add(painelBotoes, BorderLayout.SOUTH);
 
-        preencherTabela(modelo, series);
+        if (series != null && !series.isEmpty()) {
+            preencherTabela(modelo, series);
+        }
         return painel;
     }
 
     private void preencherTabela(DefaultTableModel modelo, List<Serie> series) {
         modelo.setRowCount(0);
+        if (series == null || series.isEmpty()) {
+            throw new IllegalArgumentException("Lista de Séries vazia!");
+        }
+
         for (Serie serie : series) {
             modelo.addRow(new Object[]{
                 serie.getNome(),

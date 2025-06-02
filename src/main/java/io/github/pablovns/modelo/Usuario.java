@@ -1,5 +1,7 @@
 package io.github.pablovns.modelo;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,9 +9,16 @@ import java.util.List;
  * Classe que representa um usuário do sistema.
  */
 public class Usuario {
+    @SerializedName("nome")
     private String nome;
+
+    @SerializedName("series_favoritas")
     private List<Serie> seriesFavoritas;
+
+    @SerializedName("series_assistidas")
     private List<Serie> seriesAssistidas;
+
+    @SerializedName("series_para_assistir")
     private List<Serie> seriesParaAssistir;
 
     public Usuario(String nome) {
@@ -20,10 +29,21 @@ public class Usuario {
     }
 
     // Getters
-    public String getNome() { return nome; }
-    public List<Serie> getSeriesFavoritas() { return new ArrayList<>(seriesFavoritas); }
-    public List<Serie> getSeriesAssistidas() { return new ArrayList<>(seriesAssistidas); }
-    public List<Serie> getSeriesParaAssistir() { return new ArrayList<>(seriesParaAssistir); }
+    public String getNome() {
+        return nome;
+    }
+
+    public List<Serie> getSeriesFavoritas() {
+        return seriesFavoritas;
+    }
+
+    public List<Serie> getSeriesAssistidas() {
+        return seriesAssistidas;
+    }
+
+    public List<Serie> getSeriesParaAssistir() {
+        return seriesParaAssistir;
+    }
 
     // Métodos para gerenciar séries favoritas
     public void adicionarSerieFavorita(Serie serie) {

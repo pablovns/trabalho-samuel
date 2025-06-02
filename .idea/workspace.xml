@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AIAssistantCustomInstructionsStorage">
+    <option name="instructions">
+      <map>
+        <entry key="AIAssistant.VCS.GenerateCommitMessage">
+          <value>
+            <AIAssistantStoredInstruction>
+              <option name="actionId" value="AIAssistant.VCS.GenerateCommitMessage" />
+              <option name="content" value="Avoid overly verbose descriptions or unnecessary details.&#10;Answer in Brazilian Portuguese.&#10;Answer using conventional commit format.&#10;Dont add &quot;`&quot; to the start/end of the message." />
+            </AIAssistantStoredInstruction>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="762db864-5dc6-4e93-ab89-52a3facca6ec" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/Principal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/gui/TelaPrincipal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/modelo/Serie.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/modelo/Usuario.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/persistencia/GerenciadorPersistencia.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/servico/ServicoTVMaze.java" afterDir="false" />
+    <list default="true" id="762db864-5dc6-4e93-ab89-52a3facca6ec" name="Changes" comment="Initial commit">
+      <change afterPath="$PROJECT_DIR$/dados_usuario.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/pablovns/gui/TelaPrincipal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/gui/TelaPrincipal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/pablovns/modelo/Serie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/modelo/Serie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/pablovns/modelo/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/modelo/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/pablovns/persistencia/GerenciadorPersistencia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/persistencia/GerenciadorPersistencia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/pablovns/servico/ServicoTVMaze.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/github/pablovns/servico/ServicoTVMaze.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="ChangesViewManager">
-    <option name="groupingKeys">
-      <option value="directory" />
-      <option value="repository" />
-    </option>
   </component>
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
@@ -47,11 +55,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Application.Principal.executor": "Debug",
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
@@ -81,11 +91,41 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1748732149151</updated>
-      <workItem from="1748732150313" duration="1526000" />
+      <workItem from="1748732150313" duration="3928000" />
     </task>
+    <task id="LOCAL-00001" summary="Initial commit">
+      <option name="closed" value="true" />
+      <created>1748734212811</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1748734212811</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial commit" />
+    <MESSAGE value="Replace org.json with Gson for JSON processing&#10;&#10;Refactored the codebase to use Gson for JSON serialization and deserialization, replacing org.json. This change improves code readability, simplifies JSON handling, and introduces inner classes for better structured data mapping." />
+    <option name="LAST_COMMIT_MESSAGE" value="Replace org.json with Gson for JSON processing&#10;&#10;Refactored the codebase to use Gson for JSON serialization and deserialization, replacing org.json. This change improves code readability, simplifies JSON handling, and introduces inner classes for better structured data mapping." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/io/github/pablovns/gui/TelaPrincipal.java</url>
+          <line>91</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="usuario" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
