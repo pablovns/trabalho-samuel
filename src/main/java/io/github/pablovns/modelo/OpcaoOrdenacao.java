@@ -7,8 +7,8 @@ public enum OpcaoOrdenacao {
     ALFABETICA(0, "Ordem Alfabética", Serie::getNome),
     NOTA(1, "Nota", Serie::getNota),
     ESTADO(2, "Estado", Serie::getEstado),
-    DATA_ESTREIA(3, "Data de Estreia", s -> s.getDataEstreia(), true),
-    DATA_TERMINO(4, "Data de Término", s -> s.getDataTermino(), true);
+    DATA_ESTREIA(3, "Data de Estreia", Serie::getDataEstreia, true),
+    DATA_TERMINO(4, "Data de Término", Serie::getDataTermino, true);
 
     private final int indice;
     private final String descricao;

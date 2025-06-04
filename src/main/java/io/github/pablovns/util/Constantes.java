@@ -8,4 +8,5 @@ public final class Constantes {
 
     public static final String URL_BASE_TVMAZE = "https://api.tvmaze.com";
     public static final String NAO_INFORMADO = "Não informado";
+    public static final String NAO_INFORMADA = "Não informada";
 }

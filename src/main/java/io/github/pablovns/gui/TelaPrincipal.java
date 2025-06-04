@@ -6,6 +6,7 @@ import io.github.pablovns.modelo.Serie;
 import io.github.pablovns.modelo.Usuario;
 import io.github.pablovns.persistencia.GerenciadorPersistencia;
 import io.github.pablovns.servico.ServicoTVMaze;
+import io.github.pablovns.util.Constantes;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -189,8 +190,8 @@ public class TelaPrincipal extends JFrame {
                 serie.getNota(),
                 serie.getEstado(),
                 serie.getEmissora(),
-                serie.getDataEstreia() != null ? serie.getDataEstreia().toString() : "Não informada",
-                serie.getDataTermino() != null ? serie.getDataTermino().toString() : "Não informada"
+                serie.getDataEstreia() != null ? serie.getDataEstreia().toString() : Constantes.NAO_INFORMADA,
+                serie.getDataTermino() != null ? serie.getDataTermino().toString() : Constantes.NAO_INFORMADA
             });
         }
     }
@@ -222,8 +223,8 @@ public class TelaPrincipal extends JFrame {
                     serie.getNota(),
                     serie.getEstado(),
                     serie.getEmissora(),
-                    serie.getDataEstreia() != null ? serie.getDataEstreia().toString() : "Não informada",
-                    serie.getDataTermino() != null ? serie.getDataTermino().toString() : "Não informada"
+                    serie.getDataEstreia() != null ? serie.getDataEstreia().toString() : Constantes.NAO_INFORMADA,
+                    serie.getDataTermino() != null ? serie.getDataTermino().toString() : Constantes.NAO_INFORMADA
                 });
             }
         } catch (InterruptedException e) {
@@ -304,70 +305,77 @@ public class TelaPrincipal extends JFrame {
         }
     }
 
+    private Serie criarSerieAPartirDaLinha(DefaultTableModel modelo, int linha) {
+        String dataEstreiaStr = (String) modelo.getValueAt(linha, 6);
+        String dataTerminoStr = (String) modelo.getValueAt(linha, 7);
+        
+        LocalDate dataEstreia = null;
+        if (!Constantes.NAO_INFORMADA.equals(dataEstreiaStr)) {
+            dataEstreia = LocalDate.parse(dataEstreiaStr);
+        }
+        
+        LocalDate dataTermino = null;
+        if (!Constantes.NAO_INFORMADA.equals(dataTerminoStr)) {
+            dataTermino = LocalDate.parse(dataTerminoStr);
+        }
+        
+        return new Serie(
+            0,
+            (String) modelo.getValueAt(linha, 0),
+            (String) modelo.getValueAt(linha, 1),
+            Arrays.asList(((String) modelo.getValueAt(linha, 2)).split(", ")),
+            Double.parseDouble(modelo.getValueAt(linha, 3).toString()),
+            (String) modelo.getValueAt(linha, 4),
+            dataEstreia,
+            dataTermino,
+            (String) modelo.getValueAt(linha, 5),
+            "",
+            ""
+        );
+    }
+
+    private List<Serie> obterSeriesDaTabela(DefaultTableModel modelo) {
+        List<Serie> series = new ArrayList<>();
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            series.add(criarSerieAPartirDaLinha(modelo, i));
+        }
+        return series;
+    }
+
+    private DefaultTableModel obterModeloDaAba(Component abaComponent) {
+        return (DefaultTableModel) ((JTable) ((JScrollPane) ((JPanel) abaComponent)
+            .getComponent(0)).getViewport().getView()).getModel();
+    }
+
     private void ordenarLista() {
         CategoriaSeries categoriaAtual = CategoriaSeries.fromIndice(abas.getSelectedIndex());
-        DefaultTableModel modeloAtual;
         List<Serie> series;
+        DefaultTableModel modeloAtual;
         
         if (categoriaAtual == CategoriaSeries.BUSCA) {
             modeloAtual = modeloTabela;
             if (modeloAtual.getRowCount() == 0) {
                 return;
             }
-            
-            series = new ArrayList<>();
-            for (int i = 0; i < modeloAtual.getRowCount(); i++) {
-                String dataEstreiaStr = (String) modeloAtual.getValueAt(i, 6);
-                String dataTerminoStr = (String) modeloAtual.getValueAt(i, 7);
-                
-                LocalDate dataEstreia = null;
-                if (!"Não informada".equals(dataEstreiaStr)) {
-                    dataEstreia = LocalDate.parse(dataEstreiaStr);
-                }
-                
-                LocalDate dataTermino = null;
-                if (!"Não informada".equals(dataTerminoStr)) {
-                    dataTermino = LocalDate.parse(dataTerminoStr);
-                }
-                
-                Serie serie = new Serie(
-                    0,
-                    (String) modeloAtual.getValueAt(i, 0),
-                    (String) modeloAtual.getValueAt(i, 1),
-                    Arrays.asList(((String) modeloAtual.getValueAt(i, 2)).split(", ")),
-                    Double.parseDouble(modeloAtual.getValueAt(i, 3).toString()),
-                    (String) modeloAtual.getValueAt(i, 4),
-                    dataEstreia,
-                    dataTermino,
-                    (String) modeloAtual.getValueAt(i, 5),
-                    "",
-                    ""
-                );
-                series.add(serie);
-            }
+            series = obterSeriesDaTabela(modeloAtual);
         } else {
             series = categoriaAtual.getSeriesDaCategoria(usuario);
-            
             if (series == null || series.isEmpty()) {
                 return;
             }
-            
-            modeloAtual = (DefaultTableModel) ((JTable) ((JScrollPane) ((JPanel) abas.getSelectedComponent())
-                    .getComponent(0)).getViewport().getView()).getModel();
+            modeloAtual = obterModeloDaAba(abas.getSelectedComponent());
         }
 
-        if (!series.isEmpty()) {
-            OpcaoOrdenacao opcao = OpcaoOrdenacao.fromIndice(comboOrdenacao.getSelectedIndex());
-            Comparator<Serie> comparador = opcao.getComparador();
-            
-            if (botaoOrdemCrescente.isSelected()) {
-                comparador = comparador.reversed();
-            }
-            
-            series.sort(comparador);
-            modeloAtual.setRowCount(0);
-            preencherTabela(modeloAtual, series);
+        OpcaoOrdenacao opcao = OpcaoOrdenacao.fromIndice(comboOrdenacao.getSelectedIndex());
+        Comparator<Serie> comparador = opcao.getComparador();
+        
+        if (botaoOrdemCrescente.isSelected()) {
+            comparador = comparador.reversed();
         }
+        
+        series.sort(comparador);
+        modeloAtual.setRowCount(0);
+        preencherTabela(modeloAtual, series);
     }
 
     private void carregarListas() {
