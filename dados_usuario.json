@@ -2,24 +2,26 @@
   "nome": "pablo",
   "series_favoritas": [
     {
-      "id": 83,
-      "name": "The Simpsons",
+      "id": 161,
+      "name": "Dexter",
       "language": "English",
       "genres": [
-        "Comedy",
-        "Family"
+        "Drama",
+        "Crime",
+        "Mystery"
       ],
       "rating": {
-        "average": 8.1
+        "average": 8.4
       },
-      "status": "Running",
-      "premiered": "1989-12-17",
+      "status": "Ended",
+      "premiered": "2006-10-01",
+      "ended": "2013-09-22",
       "network": {
-        "name": "FOX"
+        "name": "Paramount+ with Showtime"
       },
-      "summary": "\u003cp\u003e\u003cb\u003eThe Simpsons\u003c/b\u003e is the longest running scripted show in US television history. It captures the adventures of Homer, Marge, Maggie, Bart and Lisa who are living in a fictional town called Springfield.\u003c/p\u003e",
+      "summary": "\u003cp\u003eHe\u0027s smart, he\u0027s good looking, and he\u0027s got a great sense of humor. He\u0027s Dexter Morgan, everyone\u0027s favorite serial killer. As a Miami forensics expert, he spends his days solving crimes, and nights committing them. But Dexter lives by a strict code of honor that is both his saving grace and lifelong burden. Torn between his deadly compulsion and his desire for true happiness, Dexter is a man in profound conflict with the world and himself.\u003c/p\u003e",
       "image": {
-        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/488/1222067.jpg"
+        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/498/1246067.jpg"
       }
     },
     {
@@ -43,6 +45,91 @@
       "summary": "\u003cp\u003eLincoln Burrows is currently on death row and scheduled to die in a few months for an assassination his younger brother Michael is convinced he did not commit. With no other options and time winding down, Michael takes drastic measures to get himself incarcerated alongside his brother in Fox River State Penitentiary. Once he\u0027s inside, Michael - a structural engineer with the blueprints for the prison - begins to execute an elaborate plan to break Lincoln out and prove him innocent. When Michael arrives at Fox River State Penitentiary, he meets the prison denizens who will, unknowingly, help in his escape plans - his cellmate, the lovelorn Sucre; beautiful prison doctor Dr. Sara Tancredi, who happens to be the governor\u0027s daughter; former mob boss John Abruzzi; and Warden Henry Pope. Meanwhile, outside the prison walls, the brothers\u0027 childhood friend and Lincoln\u0027s lost love, attorney Veronica Donovan, works within the law to free them; Lincoln\u0027s teenage son LJ may be going down a path similar to his convicted father\u0027s; and Secret Service Agent Paul Kellerman\u0027s investigation into Lincoln\u0027s case proves that there may be a national conspiracy.\u003c/p\u003e",
       "image": {
         "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/104/261034.jpg"
+      }
+    },
+    {
+      "id": 15299,
+      "name": "The Boys",
+      "language": "English",
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Adult"
+      ],
+      "rating": {
+        "average": 8.4
+      },
+      "status": "Running",
+      "premiered": "2019-07-26",
+      "summary": "\u003cp\u003eIn a world where superheroes embrace the darker side of their massive celebrity and fame, \u003cb\u003eThe Boys\u003c/b\u003e centres on a group of vigilantes known informally as \"The Boys,\" who set out to take down corrupt superheroes with no more than blue collar grit and a willingness to fight dirty.\u003c/p\u003e",
+      "image": {
+        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/528/1321349.jpg"
+      }
+    },
+    {
+      "id": 83,
+      "name": "The Simpsons",
+      "language": "English",
+      "genres": [
+        "Comedy",
+        "Family"
+      ],
+      "rating": {
+        "average": 8.1
+      },
+      "status": "Running",
+      "premiered": "1989-12-17",
+      "network": {
+        "name": "FOX"
+      },
+      "summary": "\u003cp\u003e\u003cb\u003eThe Simpsons\u003c/b\u003e is the longest running scripted show in US television history. It captures the adventures of Homer, Marge, Maggie, Bart and Lisa who are living in a fictional town called Springfield.\u003c/p\u003e",
+      "image": {
+        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/488/1222067.jpg"
+      }
+    },
+    {
+      "id": 73,
+      "name": "The Walking Dead",
+      "language": "English",
+      "genres": [
+        "Drama",
+        "Action",
+        "Horror"
+      ],
+      "rating": {
+        "average": 7.9
+      },
+      "status": "Ended",
+      "premiered": "2010-10-31",
+      "ended": "2022-11-20",
+      "summary": "\u003cp\u003e\u003cb\u003eThe Walking Dead\u003c/b\u003e tells the story of the months and years that follow after a zombie apocalypse. It follows a group of survivors, led by former police officer Rick Grimes, who travel in search of a safe and secure home. As the world overrun by the dead takes its toll on the survivors, their interpersonal conflicts present a greater danger to their continuing survival than the walkers that roam the country. Over time, the characters are changed by the constant exposure to death and some grow willing to do anything to survive.\u003c/p\u003e\u003cp\u003eBased on the comic book series of the same name by Robert Kirkman, Tony Moore, and Charlie Adlard.\u003c/p\u003e",
+      "image": {
+        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/424/1061900.jpg"
+      }
+    }
+  ],
+  "series_assistidas": [
+    {
+      "id": 169,
+      "name": "Breaking Bad",
+      "language": "English",
+      "genres": [
+        "Drama",
+        "Crime",
+        "Thriller"
+      ],
+      "rating": {
+        "average": 9.2
+      },
+      "status": "Ended",
+      "premiered": "2008-01-20",
+      "ended": "2019-10-11",
+      "network": {
+        "name": "AMC"
+      },
+      "summary": "\u003cp\u003e\u003cb\u003eBreaking Bad\u003c/b\u003e follows protagonist Walter White, a chemistry teacher who lives in New Mexico with his wife and teenage son who has cerebral palsy. White is diagnosed with Stage III cancer and given a prognosis of two years left to live. With a new sense of fearlessness based on his medical prognosis, and a desire to secure his family\u0027s financial security, White chooses to enter a dangerous world of drugs and crime and ascends to power in this world. The series explores how a fatal diagnosis such as White\u0027s releases a typical man from the daily concerns and constraints of normal society and follows his transformation from mild family man to a kingpin of the drug trade.\u003c/p\u003e",
+      "image": {
+        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/501/1253519.jpg"
       }
     },
     {
@@ -69,47 +156,6 @@
       }
     },
     {
-      "id": 73,
-      "name": "The Walking Dead",
-      "language": "English",
-      "genres": [
-        "Drama",
-        "Action",
-        "Horror"
-      ],
-      "rating": {
-        "average": 7.9
-      },
-      "status": "Ended",
-      "premiered": "2010-10-31",
-      "ended": "2022-11-20",
-      "summary": "\u003cp\u003e\u003cb\u003eThe Walking Dead\u003c/b\u003e tells the story of the months and years that follow after a zombie apocalypse. It follows a group of survivors, led by former police officer Rick Grimes, who travel in search of a safe and secure home. As the world overrun by the dead takes its toll on the survivors, their interpersonal conflicts present a greater danger to their continuing survival than the walkers that roam the country. Over time, the characters are changed by the constant exposure to death and some grow willing to do anything to survive.\u003c/p\u003e\u003cp\u003eBased on the comic book series of the same name by Robert Kirkman, Tony Moore, and Charlie Adlard.\u003c/p\u003e",
-      "image": {
-        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/424/1061900.jpg"
-      }
-    },
-    {
-      "id": 15299,
-      "name": "The Boys",
-      "language": "English",
-      "genres": [
-        "Action",
-        "Fantasy",
-        "Adult"
-      ],
-      "rating": {
-        "average": 8.4
-      },
-      "status": "Running",
-      "premiered": "2019-07-26",
-      "summary": "\u003cp\u003eIn a world where superheroes embrace the darker side of their massive celebrity and fame, \u003cb\u003eThe Boys\u003c/b\u003e centres on a group of vigilantes known informally as \"The Boys,\" who set out to take down corrupt superheroes with no more than blue collar grit and a willingness to fight dirty.\u003c/p\u003e",
-      "image": {
-        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/528/1321349.jpg"
-      }
-    }
-  ],
-  "series_assistidas": [
-    {
       "id": 541,
       "name": "Prison Break",
       "language": "English",
@@ -133,28 +179,66 @@
       }
     },
     {
-      "id": 169,
-      "name": "Breaking Bad",
+      "id": 73,
+      "name": "The Walking Dead",
       "language": "English",
       "genres": [
         "Drama",
-        "Crime",
-        "Thriller"
+        "Action",
+        "Horror"
       ],
       "rating": {
-        "average": 9.2
+        "average": 7.9
       },
       "status": "Ended",
-      "premiered": "2008-01-20",
-      "ended": "2019-10-11",
-      "network": {
-        "name": "AMC"
-      },
-      "summary": "\u003cp\u003e\u003cb\u003eBreaking Bad\u003c/b\u003e follows protagonist Walter White, a chemistry teacher who lives in New Mexico with his wife and teenage son who has cerebral palsy. White is diagnosed with Stage III cancer and given a prognosis of two years left to live. With a new sense of fearlessness based on his medical prognosis, and a desire to secure his family\u0027s financial security, White chooses to enter a dangerous world of drugs and crime and ascends to power in this world. The series explores how a fatal diagnosis such as White\u0027s releases a typical man from the daily concerns and constraints of normal society and follows his transformation from mild family man to a kingpin of the drug trade.\u003c/p\u003e",
+      "premiered": "2010-10-31",
+      "ended": "2022-11-20",
+      "summary": "\u003cp\u003e\u003cb\u003eThe Walking Dead\u003c/b\u003e tells the story of the months and years that follow after a zombie apocalypse. It follows a group of survivors, led by former police officer Rick Grimes, who travel in search of a safe and secure home. As the world overrun by the dead takes its toll on the survivors, their interpersonal conflicts present a greater danger to their continuing survival than the walkers that roam the country. Over time, the characters are changed by the constant exposure to death and some grow willing to do anything to survive.\u003c/p\u003e\u003cp\u003eBased on the comic book series of the same name by Robert Kirkman, Tony Moore, and Charlie Adlard.\u003c/p\u003e",
       "image": {
-        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/501/1253519.jpg"
+        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/424/1061900.jpg"
       }
     }
   ],
-  "series_para_assistir": []
+  "series_para_assistir": [
+    {
+      "id": 15299,
+      "name": "The Boys",
+      "language": "English",
+      "genres": [
+        "Action",
+        "Fantasy",
+        "Adult"
+      ],
+      "rating": {
+        "average": 8.4
+      },
+      "status": "Running",
+      "premiered": "2019-07-26",
+      "summary": "\u003cp\u003eIn a world where superheroes embrace the darker side of their massive celebrity and fame, \u003cb\u003eThe Boys\u003c/b\u003e centres on a group of vigilantes known informally as \"The Boys,\" who set out to take down corrupt superheroes with no more than blue collar grit and a willingness to fight dirty.\u003c/p\u003e",
+      "image": {
+        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/528/1321349.jpg"
+      }
+    },
+    {
+      "id": 83,
+      "name": "The Simpsons",
+      "language": "English",
+      "genres": [
+        "Comedy",
+        "Family"
+      ],
+      "rating": {
+        "average": 8.1
+      },
+      "status": "Running",
+      "premiered": "1989-12-17",
+      "network": {
+        "name": "FOX"
+      },
+      "summary": "\u003cp\u003e\u003cb\u003eThe Simpsons\u003c/b\u003e is the longest running scripted show in US television history. It captures the adventures of Homer, Marge, Maggie, Bart and Lisa who are living in a fictional town called Springfield.\u003c/p\u003e",
+      "image": {
+        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/488/1222067.jpg"
+      }
+    }
+  ]
 }

@@ -1,6 +1,7 @@
 package io.github.pablovns.gui;
 
 import io.github.pablovns.modelo.CategoriaSeries;
+import io.github.pablovns.modelo.OpcaoOrdenacao;
 import io.github.pablovns.modelo.Serie;
 import io.github.pablovns.modelo.Usuario;
 import io.github.pablovns.persistencia.GerenciadorPersistencia;
@@ -61,7 +62,7 @@ public class TelaPrincipal extends JFrame {
         painelBusca.add(botaoBuscar);
 
         // Configuração da tabela de resultados
-        String[] colunas = {"Nome", "Idioma", "Gêneros", "Nota", "Estado", "Emissora", "Data de Estreia"};
+        String[] colunas = {"Nome", "Idioma", "Gêneros", "Nota", "Estado", "Emissora", "Data de Estreia", "Data de Término"};
         modeloTabela = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -82,12 +83,7 @@ public class TelaPrincipal extends JFrame {
 
         // Painel de ordenação
         JPanel painelOrdenacao = new JPanel(new FlowLayout());
-        comboOrdenacao = new JComboBox<>(new String[]{
-            "Ordem Alfabética",
-            "Nota",
-            "Estado",
-            "Data de Estreia"
-        });
+        comboOrdenacao = new JComboBox<>(OpcaoOrdenacao.getDescricoes());
         botaoOrdemCrescente = new JToggleButton("↑");
         botaoOrdemCrescente.setToolTipText("Clique para alternar entre ordem crescente (↑) e decrescente (↓)");
         botaoOrdemCrescente.addActionListener(e -> {
@@ -133,7 +129,7 @@ public class TelaPrincipal extends JFrame {
 
     private JPanel criarPainelLista(List<Serie> series) {
         DefaultTableModel modelo = new DefaultTableModel(
-            new String[]{"Nome", "Idioma", "Gêneros", "Nota", "Estado", "Emissora", "Data de Estreia"}, 0
+            new String[]{"Nome", "Idioma", "Gêneros", "Nota", "Estado", "Emissora", "Data de Estreia", "Data de Término"}, 0
         ) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -182,7 +178,7 @@ public class TelaPrincipal extends JFrame {
     private void preencherTabela(DefaultTableModel modelo, List<Serie> series) {
         modelo.setRowCount(0);
         if (series == null || series.isEmpty()) {
-            return; // Apenas limpa a tabela se a lista estiver vazia
+            return;
         }
 
         for (Serie serie : series) {
@@ -193,7 +189,8 @@ public class TelaPrincipal extends JFrame {
                 serie.getNota(),
                 serie.getEstado(),
                 serie.getEmissora(),
-                serie.getDataEstreia() != null ? serie.getDataEstreia().toString() : "Não informada"
+                serie.getDataEstreia() != null ? serie.getDataEstreia().toString() : "Não informada",
+                serie.getDataTermino() != null ? serie.getDataTermino().toString() : "Não informada"
             });
         }
     }
@@ -225,7 +222,8 @@ public class TelaPrincipal extends JFrame {
                     serie.getNota(),
                     serie.getEstado(),
                     serie.getEmissora(),
-                    serie.getDataEstreia() != null ? serie.getDataEstreia().toString() : "Não informada"
+                    serie.getDataEstreia() != null ? serie.getDataEstreia().toString() : "Não informada",
+                    serie.getDataTermino() != null ? serie.getDataTermino().toString() : "Não informada"
                 });
             }
         } catch (InterruptedException e) {
@@ -242,22 +240,56 @@ public class TelaPrincipal extends JFrame {
         }
     }
     
-    private void adicionarSerieSelecionada(CategoriaSeries categoria) {
-        int linha = tabelaResultados.getSelectedRow();
+    private void adicionarSerieSelecionada(CategoriaSeries categoriaDestino) {
+        CategoriaSeries categoriaAtual = CategoriaSeries.fromIndice(abas.getSelectedIndex());
+        JTable tabelaAtual;
+        
+        if (categoriaAtual == CategoriaSeries.BUSCA) {
+            tabelaAtual = tabelaResultados;
+        } else {
+            tabelaAtual = (JTable) ((JScrollPane) ((JPanel) abas.getSelectedComponent())
+                .getComponent(0)).getViewport().getView();
+        }
+        
+        int linha = tabelaAtual.getSelectedRow();
         if (linha == -1) {
             JOptionPane.showMessageDialog(this, "Selecione uma série primeiro!");
             return;
         }
 
         try {
-            String nomeSerie = (String) tabelaResultados.getValueAt(linha, 0);
-            List<Serie> series = servicoTVMaze.buscarSeries(nomeSerie);
-            if (!series.isEmpty()) {
-                Serie serie = series.getFirst();
-                categoria.adicionarSerie(usuario, serie);
-                carregarListas();
-                salvarDados();
+            Serie serie;
+            if (categoriaAtual == CategoriaSeries.BUSCA) {
+                // Na aba de busca, precisamos buscar a série completa na API
+                String nomeSerie = (String) tabelaAtual.getValueAt(linha, 0);
+                List<Serie> series = servicoTVMaze.buscarSeries(nomeSerie);
+                if (series.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, 
+                        "Não foi possível encontrar a série selecionada.",
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                serie = series.getFirst();
+            } else {
+                // Nas outras abas, a série já está completa na lista
+                serie = categoriaAtual.getSeriesDaCategoria(usuario).get(linha);
             }
+
+            // Verifica se a série já está na categoria de destino
+            List<Serie> seriesDestino = categoriaDestino.getSeriesDaCategoria(usuario);
+            if (seriesDestino != null && seriesDestino.stream().anyMatch(s -> s.getNome().equals(serie.getNome()))) {
+                JOptionPane.showMessageDialog(this,
+                    "Esta série já está na lista " + categoriaDestino.getDescricaoLista() + ".",
+                    "Série Duplicada",
+                    JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            categoriaDestino.adicionarSerie(usuario, serie);
+            carregarListas();
+            salvarDados();
+            
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             JOptionPane.showMessageDialog(this,
@@ -280,15 +312,22 @@ public class TelaPrincipal extends JFrame {
         if (categoriaAtual == CategoriaSeries.BUSCA) {
             modeloAtual = modeloTabela;
             if (modeloAtual.getRowCount() == 0) {
-                return; // Não mostra mensagem ao trocar de aba
+                return;
             }
             
             series = new ArrayList<>();
             for (int i = 0; i < modeloAtual.getRowCount(); i++) {
                 String dataEstreiaStr = (String) modeloAtual.getValueAt(i, 6);
+                String dataTerminoStr = (String) modeloAtual.getValueAt(i, 7);
+                
                 LocalDate dataEstreia = null;
                 if (!"Não informada".equals(dataEstreiaStr)) {
                     dataEstreia = LocalDate.parse(dataEstreiaStr);
+                }
+                
+                LocalDate dataTermino = null;
+                if (!"Não informada".equals(dataTerminoStr)) {
+                    dataTermino = LocalDate.parse(dataTerminoStr);
                 }
                 
                 Serie serie = new Serie(
@@ -299,7 +338,7 @@ public class TelaPrincipal extends JFrame {
                     Double.parseDouble(modeloAtual.getValueAt(i, 3).toString()),
                     (String) modeloAtual.getValueAt(i, 4),
                     dataEstreia,
-                    null,
+                    dataTermino,
                     (String) modeloAtual.getValueAt(i, 5),
                     "",
                     ""
@@ -310,28 +349,21 @@ public class TelaPrincipal extends JFrame {
             series = categoriaAtual.getSeriesDaCategoria(usuario);
             
             if (series == null || series.isEmpty()) {
-                return; // Não mostra mensagem ao trocar de aba
+                return;
             }
             
             modeloAtual = (DefaultTableModel) ((JTable) ((JScrollPane) ((JPanel) abas.getSelectedComponent())
                     .getComponent(0)).getViewport().getView()).getModel();
         }
 
-        boolean ordemDecrescente = botaoOrdemCrescente.isSelected();
-        
-        Comparator<Serie> comparador = switch (comboOrdenacao.getSelectedIndex()) {
-            case 0 -> Comparator.comparing(Serie::getNome);
-            case 1 -> Comparator.comparing(Serie::getNota);
-            case 2 -> Comparator.comparing(Serie::getEstado);
-            case 3 -> Comparator.comparing(Serie::getDataEstreia, 
-                     Comparator.nullsLast(Comparator.naturalOrder()));
-            default -> null;
-        };
-
-        if (comparador != null) {
-            if (ordemDecrescente) {
+        if (!series.isEmpty()) {
+            OpcaoOrdenacao opcao = OpcaoOrdenacao.fromIndice(comboOrdenacao.getSelectedIndex());
+            Comparator<Serie> comparador = opcao.getComparador();
+            
+            if (botaoOrdemCrescente.isSelected()) {
                 comparador = comparador.reversed();
             }
+            
             series.sort(comparador);
             modeloAtual.setRowCount(0);
             preencherTabela(modeloAtual, series);
@@ -344,22 +376,14 @@ public class TelaPrincipal extends JFrame {
             if (categoria != CategoriaSeries.BUSCA) {
                 List<Serie> series = categoria.getSeriesDaCategoria(usuario);
                 if (series != null && !series.isEmpty()) {
-                    // Ordena a lista antes de criar o painel
-                    boolean ordemDecrescente = botaoOrdemCrescente.isSelected();
-                    Comparator<Serie> comparador = switch (comboOrdenacao.getSelectedIndex()) {
-                        case 0 -> Comparator.comparing(Serie::getNome);
-                        case 1 -> Comparator.comparing(Serie::getNota);
-                        case 2 -> Comparator.comparing(Serie::getEstado);
-                        case 3 -> Comparator.comparing(Serie::getDataEstreia, 
-                                 Comparator.nullsLast(Comparator.naturalOrder()));
-                        default -> null;
-                    };
-                    if (comparador != null) {
-                        if (ordemDecrescente) {
-                            comparador = comparador.reversed();
-                        }
-                        series.sort(comparador);
+                    OpcaoOrdenacao opcao = OpcaoOrdenacao.fromIndice(comboOrdenacao.getSelectedIndex());
+                    Comparator<Serie> comparador = opcao.getComparador();
+                    
+                    if (botaoOrdemCrescente.isSelected()) {
+                        comparador = comparador.reversed();
                     }
+                    
+                    series.sort(comparador);
                 }
                 abas.setComponentAt(categoria.getIndice(), 
                     criarPainelLista(series));
