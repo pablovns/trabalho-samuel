@@ -5,6 +5,7 @@ Este é um sistema para acompanhamento de séries de TV que utiliza a API do TVM
 ## Funcionalidades
 
 ### Busca e Visualização
+
 - Busca de séries por nome
 - Visualização detalhada com informações como:
   - Nome e idioma
@@ -16,6 +17,7 @@ Este é um sistema para acompanhamento de séries de TV que utiliza a API do TVM
   - Data de término
 
 ### Gerenciamento de Listas
+
 - Categorização em:
   - Séries favoritas
   - Séries já assistidas
@@ -25,6 +27,7 @@ Este é um sistema para acompanhamento de séries de TV que utiliza a API do TVM
 - Remoção de séries das listas
 
 ### Sistema de Ordenação
+
 - Ordenação bidirecional (crescente/decrescente) por:
   - Ordem alfabética
   - Nota geral
@@ -35,14 +38,15 @@ Este é um sistema para acompanhamento de séries de TV que utiliza a API do TVM
 - Tratamento especial para valores nulos (ex: datas não informadas)
 
 ### Interface Gráfica
-- Design moderno e intuitivo
+
 - Navegação por abas para diferentes categorias
 - Feedback visual para todas as operações
 - Mensagens informativas para o usuário
 - Botões com ícones para indicar direção da ordenação
 
 ### Persistência de Dados
-- Salvamento automático ao fechar o programa
+
+- Salvamento automático
 - Formato JSON para armazenamento
 - Tratamento adequado de datas
 - Serialização otimizada dos dados
@@ -56,7 +60,8 @@ Este é um sistema para acompanhamento de séries de TV que utiliza a API do TVM
 
 1. Clone o repositório
 2. Na pasta do projeto, execute:
-   ```
+
+   ```sh
    mvn clean install
    mvn exec:java -Dexec.mainClass="io.github.pablovns.Principal"
    ```
@@ -65,8 +70,6 @@ Este é um sistema para acompanhamento de séries de TV que utiliza a API do TVM
 
 - Java 21
 - Swing (interface gráfica)
-- API TVMaze
-- Gson para serialização JSON
 - Maven para gerenciamento de dependências
 
 ## Estrutura do projeto
@@ -79,11 +82,11 @@ Este é um sistema para acompanhamento de séries de TV que utiliza a API do TVM
 
 ## Observações
 
-- O sistema salva automaticamente os dados ao fechar
+- O sistema salva automaticamente os dados em tempo real
 - Os dados são armazenados no arquivo `dados_usuario.json`
 - Todas as operações possuem tratamento de exceções para evitar falhas inesperadas
 - O código segue boas práticas de programação:
   - Baixo acoplamento entre componentes
   - Alta coesão nas classes
   - Uso de enums para constantes e categorização
-  - Tratamento adequado de casos especiais 
+  - Tratamento adequado de casos especiais
