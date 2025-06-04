@@ -3,11 +3,13 @@ package io.github.pablovns.persistencia;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.github.pablovns.modelo.Usuario;
+import io.github.pablovns.util.LocalDateAdapter;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 
 /**
  * Classe responsável por gerenciar a persistência dos dados do usuário em formato JSON.
@@ -19,6 +21,7 @@ public class GerenciadorPersistencia {
     public GerenciadorPersistencia() {
         this.gson = new GsonBuilder()
                 .setPrettyPrinting() // Para formatar o JSON de forma legível
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
                 .create();
     }
 

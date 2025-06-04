@@ -1,7 +1,9 @@
 package io.github.pablovns.modelo;
 
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import io.github.pablovns.util.Constantes;
+import io.github.pablovns.util.LocalDateAdapter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -30,10 +32,12 @@ public class Serie implements Serializable {
     private String estado;
 
     @SerializedName("premiered")
-    private String dataEstreiaStr;
+    @JsonAdapter(LocalDateAdapter.class)
+    private LocalDate dataEstreia;
 
     @SerializedName("ended")
-    private String dataTerminoStr;
+    @JsonAdapter(LocalDateAdapter.class)
+    private LocalDate dataTermino;
 
     @SerializedName("network")
     private Network emissora;
@@ -83,8 +87,8 @@ public class Serie implements Serializable {
         this.nota = new Rating();
         this.nota.average = nota;
         this.estado = estado;
-        this.dataEstreiaStr = dataEstreia != null ? dataEstreia.toString() : null;
-        this.dataTerminoStr = dataTermino != null ? dataTermino.toString() : null;
+        this.dataEstreia = dataEstreia;
+        this.dataTermino = dataTermino;
         this.emissora = new Network();
         this.emissora.name = emissora;
         this.resumo = resumo;
@@ -118,19 +122,11 @@ public class Serie implements Serializable {
     }
 
     public LocalDate getDataEstreia() {
-        try {
-            return dataEstreiaStr != null ? LocalDate.parse(dataEstreiaStr) : null;
-        } catch (Exception e) {
-            return null;
-        }
+        return dataEstreia;
     }
 
     public LocalDate getDataTermino() {
-        try {
-            return dataTerminoStr != null ? LocalDate.parse(dataTerminoStr) : null;
-        } catch (Exception e) {
-            return null;
-        }
+        return dataTermino;
     }
 
     public String getEmissora() {

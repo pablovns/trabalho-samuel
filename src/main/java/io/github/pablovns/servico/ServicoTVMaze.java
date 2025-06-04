@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import io.github.pablovns.modelo.Serie;
 import io.github.pablovns.util.Constantes;
+import io.github.pablovns.util.LocalDateAdapter;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -12,6 +13,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class ServicoTVMaze {
     public ServicoTVMaze() {
         this.cliente = HttpClient.newHttpClient();
         this.gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
                 .create();
     }
 
