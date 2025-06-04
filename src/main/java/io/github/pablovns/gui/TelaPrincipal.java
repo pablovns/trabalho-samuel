@@ -12,6 +12,9 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -24,6 +27,7 @@ public class TelaPrincipal extends JFrame {
     private JTable tabelaResultados;
     private DefaultTableModel modeloTabela;
     private JComboBox<String> comboOrdenacao;
+    private JToggleButton botaoOrdemCrescente;
     private JTabbedPane abas;
 
     public TelaPrincipal(Usuario usuario) {
@@ -57,7 +61,7 @@ public class TelaPrincipal extends JFrame {
         painelBusca.add(botaoBuscar);
 
         // Configuração da tabela de resultados
-        String[] colunas = {"Nome", "Idioma", "Gêneros", "Nota", "Estado", "Emissora"};
+        String[] colunas = {"Nome", "Idioma", "Gêneros", "Nota", "Estado", "Emissora", "Data de Estreia"};
         modeloTabela = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -84,15 +88,27 @@ public class TelaPrincipal extends JFrame {
             "Estado",
             "Data de Estreia"
         });
+        botaoOrdemCrescente = new JToggleButton("↑");
+        botaoOrdemCrescente.setToolTipText("Clique para alternar entre ordem crescente (↑) e decrescente (↓)");
+        botaoOrdemCrescente.addActionListener(e -> {
+            botaoOrdemCrescente.setText(botaoOrdemCrescente.isSelected() ? "↓" : "↑");
+            ordenarLista();
+        });
+        
         painelOrdenacao.add(new JLabel("Ordenar por:"));
         painelOrdenacao.add(comboOrdenacao);
+        painelOrdenacao.add(botaoOrdemCrescente);
 
         // Abas para as listas
         abas = new JTabbedPane();
-        abas.addTab("Busca", scrollTabela);
-        abas.addTab("Favoritos", criarPainelLista(usuario.getSeriesFavoritas()));
-        abas.addTab("Assistidas", criarPainelLista(usuario.getSeriesAssistidas()));
-        abas.addTab("Para Assistir", criarPainelLista(usuario.getSeriesParaAssistir()));
+        for (CategoriaSeries categoria : CategoriaSeries.values()) {
+            if (categoria == CategoriaSeries.BUSCA) {
+                abas.addTab(categoria.getTitulo(), scrollTabela);
+            } else {
+                abas.addTab(categoria.getTitulo(), 
+                    criarPainelLista(categoria.getSeriesDaCategoria(usuario)));
+            }
+        }
 
         // Montagem do layout
         painelPrincipal.add(painelBusca, BorderLayout.NORTH);
@@ -114,7 +130,7 @@ public class TelaPrincipal extends JFrame {
 
     private JPanel criarPainelLista(List<Serie> series) {
         DefaultTableModel modelo = new DefaultTableModel(
-            new String[]{"Nome", "Idioma", "Gêneros", "Nota", "Estado", "Emissora"}, 0
+            new String[]{"Nome", "Idioma", "Gêneros", "Nota", "Estado", "Emissora", "Data de Estreia"}, 0
         ) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -163,7 +179,7 @@ public class TelaPrincipal extends JFrame {
     private void preencherTabela(DefaultTableModel modelo, List<Serie> series) {
         modelo.setRowCount(0);
         if (series == null || series.isEmpty()) {
-            throw new IllegalArgumentException("Lista de Séries vazia!");
+            return; // Apenas limpa a tabela se a lista estiver vazia
         }
 
         for (Serie serie : series) {
@@ -173,7 +189,8 @@ public class TelaPrincipal extends JFrame {
                 String.join(", ", serie.getGeneros()),
                 serie.getNota(),
                 serie.getEstado(),
-                serie.getEmissora()
+                serie.getEmissora(),
+                serie.getDataEstreia() != null ? serie.getDataEstreia().toString() : "Não informada"
             });
         }
     }
@@ -204,7 +221,8 @@ public class TelaPrincipal extends JFrame {
                     String.join(", ", serie.getGeneros()),
                     serie.getNota(),
                     serie.getEstado(),
-                    serie.getEmissora()
+                    serie.getEmissora(),
+                    serie.getDataEstreia() != null ? serie.getDataEstreia().toString() : "Não informada"
                 });
             }
         } catch (InterruptedException e) {
@@ -221,7 +239,7 @@ public class TelaPrincipal extends JFrame {
         }
     }
     
-    private void adicionarSerieSelecionada(CategoriaSeries lista) {
+    private void adicionarSerieSelecionada(CategoriaSeries categoria) {
         int linha = tabelaResultados.getSelectedRow();
         if (linha == -1) {
             JOptionPane.showMessageDialog(this, "Selecione uma série primeiro!");
@@ -233,17 +251,7 @@ public class TelaPrincipal extends JFrame {
             List<Serie> series = servicoTVMaze.buscarSeries(nomeSerie);
             if (!series.isEmpty()) {
                 Serie serie = series.getFirst();
-                switch (lista) {
-                    case CategoriaSeries.FAVORITOS:
-                        usuario.adicionarSerieFavorita(serie);
-                        break;
-                    case CategoriaSeries.ASSISTIDAS:
-                        usuario.adicionarSerieAssistida(serie);
-                        break;
-                    case CategoriaSeries.PARA_ASSISTIR:
-                        usuario.adicionarSerieParaAssistir(serie);
-                        break;
-                }
+                categoria.adicionarSerie(usuario, serie);
                 carregarListas();
                 salvarDados();
             }
@@ -262,21 +270,63 @@ public class TelaPrincipal extends JFrame {
     }
 
     private void ordenarLista() {
-        int indiceAba = abas.getSelectedIndex();
-        if (indiceAba == 0) return; // Aba de busca não é ordenável
+        CategoriaSeries categoriaAtual = CategoriaSeries.fromIndice(abas.getSelectedIndex());
+        DefaultTableModel modeloAtual;
+        List<Serie> series;
+        
+        if (categoriaAtual == CategoriaSeries.BUSCA) {
+            modeloAtual = modeloTabela;
+            if (modeloAtual.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this,
+                    "Não há séries para ordenar. Faça uma busca primeiro.",
+                    "Lista Vazia",
+                    JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            series = new ArrayList<>();
+            for (int i = 0; i < modeloAtual.getRowCount(); i++) {
+                String dataEstreiaStr = (String) modeloAtual.getValueAt(i, 6);
+                LocalDate dataEstreia = null;
+                if (!"Não informada".equals(dataEstreiaStr)) {
+                    dataEstreia = LocalDate.parse(dataEstreiaStr);
+                }
+                
+                Serie serie = new Serie(
+                    0,
+                    (String) modeloAtual.getValueAt(i, 0),
+                    (String) modeloAtual.getValueAt(i, 1),
+                    Arrays.asList(((String) modeloAtual.getValueAt(i, 2)).split(", ")),
+                    Double.parseDouble(modeloAtual.getValueAt(i, 3).toString()),
+                    (String) modeloAtual.getValueAt(i, 4),
+                    dataEstreia,
+                    null,
+                    (String) modeloAtual.getValueAt(i, 5),
+                    "",
+                    ""
+                );
+                series.add(serie);
+            }
+        } else {
+            series = categoriaAtual.getSeriesDaCategoria(usuario);
+            
+            if (series == null || series.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                    "Não há séries " + categoriaAtual.getDescricaoLista() + " para ordenar.",
+                    "Lista Vazia",
+                    JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            modeloAtual = (DefaultTableModel) ((JTable) ((JScrollPane) ((JPanel) abas.getSelectedComponent())
+                    .getComponent(0)).getViewport().getView()).getModel();
+        }
 
-        List<Serie> series = switch (indiceAba) {
-            case 1 -> usuario.getSeriesFavoritas();
-            case 2 -> usuario.getSeriesAssistidas();
-            case 3 -> usuario.getSeriesParaAssistir();
-            default -> null;
-        };
-
-        if (series == null) return;
-
+        boolean ordemDecrescente = botaoOrdemCrescente.isSelected();
+        
         Comparator<Serie> comparador = switch (comboOrdenacao.getSelectedIndex()) {
             case 0 -> Comparator.comparing(Serie::getNome);
-            case 1 -> Comparator.comparing(Serie::getNota).reversed();
+            case 1 -> Comparator.comparing(Serie::getNota);
             case 2 -> Comparator.comparing(Serie::getEstado);
             case 3 -> Comparator.comparing(Serie::getDataEstreia, 
                      Comparator.nullsLast(Comparator.naturalOrder()));
@@ -284,16 +334,23 @@ public class TelaPrincipal extends JFrame {
         };
 
         if (comparador != null) {
+            if (ordemDecrescente) {
+                comparador = comparador.reversed();
+            }
             series.sort(comparador);
-            carregarListas();
+            modeloAtual.setRowCount(0);
+            preencherTabela(modeloAtual, series);
         }
     }
 
     private void carregarListas() {
         // Recriar as abas com as listas atualizadas
-        abas.setComponentAt(1, criarPainelLista(usuario.getSeriesFavoritas()));
-        abas.setComponentAt(2, criarPainelLista(usuario.getSeriesAssistidas()));
-        abas.setComponentAt(3, criarPainelLista(usuario.getSeriesParaAssistir()));
+        for (CategoriaSeries categoria : CategoriaSeries.values()) {
+            if (categoria != CategoriaSeries.BUSCA) {
+                abas.setComponentAt(categoria.getIndice(), 
+                    criarPainelLista(categoria.getSeriesDaCategoria(usuario)));
+            }
+        }
     }
 
     private void salvarDados() {
