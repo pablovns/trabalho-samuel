@@ -110,6 +110,9 @@ public class TelaPrincipal extends JFrame {
             }
         }
 
+        // Adiciona listener para ordenar ao trocar de aba
+        abas.addChangeListener(e -> ordenarLista());
+
         // Montagem do layout
         painelPrincipal.add(painelBusca, BorderLayout.NORTH);
         JPanel painelCentral = new JPanel(new BorderLayout());
@@ -277,11 +280,7 @@ public class TelaPrincipal extends JFrame {
         if (categoriaAtual == CategoriaSeries.BUSCA) {
             modeloAtual = modeloTabela;
             if (modeloAtual.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this,
-                    "Não há séries para ordenar. Faça uma busca primeiro.",
-                    "Lista Vazia",
-                    JOptionPane.INFORMATION_MESSAGE);
-                return;
+                return; // Não mostra mensagem ao trocar de aba
             }
             
             series = new ArrayList<>();
@@ -311,11 +310,7 @@ public class TelaPrincipal extends JFrame {
             series = categoriaAtual.getSeriesDaCategoria(usuario);
             
             if (series == null || series.isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                    "Não há séries " + categoriaAtual.getDescricaoLista() + " para ordenar.",
-                    "Lista Vazia",
-                    JOptionPane.INFORMATION_MESSAGE);
-                return;
+                return; // Não mostra mensagem ao trocar de aba
             }
             
             modeloAtual = (DefaultTableModel) ((JTable) ((JScrollPane) ((JPanel) abas.getSelectedComponent())
@@ -347,8 +342,27 @@ public class TelaPrincipal extends JFrame {
         // Recriar as abas com as listas atualizadas
         for (CategoriaSeries categoria : CategoriaSeries.values()) {
             if (categoria != CategoriaSeries.BUSCA) {
+                List<Serie> series = categoria.getSeriesDaCategoria(usuario);
+                if (series != null && !series.isEmpty()) {
+                    // Ordena a lista antes de criar o painel
+                    boolean ordemDecrescente = botaoOrdemCrescente.isSelected();
+                    Comparator<Serie> comparador = switch (comboOrdenacao.getSelectedIndex()) {
+                        case 0 -> Comparator.comparing(Serie::getNome);
+                        case 1 -> Comparator.comparing(Serie::getNota);
+                        case 2 -> Comparator.comparing(Serie::getEstado);
+                        case 3 -> Comparator.comparing(Serie::getDataEstreia, 
+                                 Comparator.nullsLast(Comparator.naturalOrder()));
+                        default -> null;
+                    };
+                    if (comparador != null) {
+                        if (ordemDecrescente) {
+                            comparador = comparador.reversed();
+                        }
+                        series.sort(comparador);
+                    }
+                }
                 abas.setComponentAt(categoria.getIndice(), 
-                    criarPainelLista(categoria.getSeriesDaCategoria(usuario)));
+                    criarPainelLista(series));
             }
         }
     }
