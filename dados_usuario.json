@@ -2,26 +2,22 @@
   "nome": "pablo",
   "series_favoritas": [
     {
-      "id": 161,
-      "name": "Dexter",
+      "id": 15299,
+      "name": "The Boys",
       "language": "English",
       "genres": [
-        "Drama",
-        "Crime",
-        "Mystery"
+        "Action",
+        "Fantasy",
+        "Adult"
       ],
       "rating": {
         "average": 8.4
       },
-      "status": "Ended",
-      "premiered": "2006-10-01",
-      "ended": "2013-09-22",
-      "network": {
-        "name": "Paramount+ with Showtime"
-      },
-      "summary": "\u003cp\u003eHe\u0027s smart, he\u0027s good looking, and he\u0027s got a great sense of humor. He\u0027s Dexter Morgan, everyone\u0027s favorite serial killer. As a Miami forensics expert, he spends his days solving crimes, and nights committing them. But Dexter lives by a strict code of honor that is both his saving grace and lifelong burden. Torn between his deadly compulsion and his desire for true happiness, Dexter is a man in profound conflict with the world and himself.\u003c/p\u003e",
+      "status": "Running",
+      "premiered": "2019-07-26",
+      "summary": "\u003cp\u003eIn a world where superheroes embrace the darker side of their massive celebrity and fame, \u003cb\u003eThe Boys\u003c/b\u003e centres on a group of vigilantes known informally as \"The Boys,\" who set out to take down corrupt superheroes with no more than blue collar grit and a willingness to fight dirty.\u003c/p\u003e",
       "image": {
-        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/498/1246067.jpg"
+        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/528/1321349.jpg"
       }
     },
     {
@@ -48,45 +44,30 @@
       }
     },
     {
-      "id": 15299,
-      "name": "The Boys",
+      "id": 161,
+      "name": "Dexter",
       "language": "English",
       "genres": [
-        "Action",
-        "Fantasy",
-        "Adult"
+        "Drama",
+        "Crime",
+        "Mystery"
       ],
       "rating": {
         "average": 8.4
       },
-      "status": "Running",
-      "premiered": "2019-07-26",
-      "summary": "\u003cp\u003eIn a world where superheroes embrace the darker side of their massive celebrity and fame, \u003cb\u003eThe Boys\u003c/b\u003e centres on a group of vigilantes known informally as \"The Boys,\" who set out to take down corrupt superheroes with no more than blue collar grit and a willingness to fight dirty.\u003c/p\u003e",
-      "image": {
-        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/528/1321349.jpg"
-      }
-    },
-    {
-      "id": 83,
-      "name": "The Simpsons",
-      "language": "English",
-      "genres": [
-        "Comedy",
-        "Family"
-      ],
-      "rating": {
-        "average": 8.1
-      },
-      "status": "Running",
-      "premiered": "1989-12-17",
+      "status": "Ended",
+      "premiered": "2006-10-01",
+      "ended": "2013-09-22",
       "network": {
-        "name": "FOX"
+        "name": "Paramount+ with Showtime"
       },
-      "summary": "\u003cp\u003e\u003cb\u003eThe Simpsons\u003c/b\u003e is the longest running scripted show in US television history. It captures the adventures of Homer, Marge, Maggie, Bart and Lisa who are living in a fictional town called Springfield.\u003c/p\u003e",
+      "summary": "\u003cp\u003eHe\u0027s smart, he\u0027s good looking, and he\u0027s got a great sense of humor. He\u0027s Dexter Morgan, everyone\u0027s favorite serial killer. As a Miami forensics expert, he spends his days solving crimes, and nights committing them. But Dexter lives by a strict code of honor that is both his saving grace and lifelong burden. Torn between his deadly compulsion and his desire for true happiness, Dexter is a man in profound conflict with the world and himself.\u003c/p\u003e",
       "image": {
-        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/488/1222067.jpg"
+        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/498/1246067.jpg"
       }
-    },
+    }
+  ],
+  "series_assistidas": [
     {
       "id": 73,
       "name": "The Walking Dead",
@@ -106,9 +87,7 @@
       "image": {
         "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/424/1061900.jpg"
       }
-    }
-  ],
-  "series_assistidas": [
+    },
     {
       "id": 169,
       "name": "Breaking Bad",
@@ -133,29 +112,6 @@
       }
     },
     {
-      "id": 161,
-      "name": "Dexter",
-      "language": "English",
-      "genres": [
-        "Drama",
-        "Crime",
-        "Mystery"
-      ],
-      "rating": {
-        "average": 8.4
-      },
-      "status": "Ended",
-      "premiered": "2006-10-01",
-      "ended": "2013-09-22",
-      "network": {
-        "name": "Paramount+ with Showtime"
-      },
-      "summary": "\u003cp\u003eHe\u0027s smart, he\u0027s good looking, and he\u0027s got a great sense of humor. He\u0027s Dexter Morgan, everyone\u0027s favorite serial killer. As a Miami forensics expert, he spends his days solving crimes, and nights committing them. But Dexter lives by a strict code of honor that is both his saving grace and lifelong burden. Torn between his deadly compulsion and his desire for true happiness, Dexter is a man in profound conflict with the world and himself.\u003c/p\u003e",
-      "image": {
-        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/498/1246067.jpg"
-      }
-    },
-    {
       "id": 541,
       "name": "Prison Break",
       "language": "English",
@@ -179,23 +135,26 @@
       }
     },
     {
-      "id": 73,
-      "name": "The Walking Dead",
+      "id": 161,
+      "name": "Dexter",
       "language": "English",
       "genres": [
         "Drama",
-        "Action",
-        "Horror"
+        "Crime",
+        "Mystery"
       ],
       "rating": {
-        "average": 7.9
+        "average": 8.4
       },
       "status": "Ended",
-      "premiered": "2010-10-31",
-      "ended": "2022-11-20",
-      "summary": "\u003cp\u003e\u003cb\u003eThe Walking Dead\u003c/b\u003e tells the story of the months and years that follow after a zombie apocalypse. It follows a group of survivors, led by former police officer Rick Grimes, who travel in search of a safe and secure home. As the world overrun by the dead takes its toll on the survivors, their interpersonal conflicts present a greater danger to their continuing survival than the walkers that roam the country. Over time, the characters are changed by the constant exposure to death and some grow willing to do anything to survive.\u003c/p\u003e\u003cp\u003eBased on the comic book series of the same name by Robert Kirkman, Tony Moore, and Charlie Adlard.\u003c/p\u003e",
+      "premiered": "2006-10-01",
+      "ended": "2013-09-22",
+      "network": {
+        "name": "Paramount+ with Showtime"
+      },
+      "summary": "\u003cp\u003eHe\u0027s smart, he\u0027s good looking, and he\u0027s got a great sense of humor. He\u0027s Dexter Morgan, everyone\u0027s favorite serial killer. As a Miami forensics expert, he spends his days solving crimes, and nights committing them. But Dexter lives by a strict code of honor that is both his saving grace and lifelong burden. Torn between his deadly compulsion and his desire for true happiness, Dexter is a man in profound conflict with the world and himself.\u003c/p\u003e",
       "image": {
-        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/424/1061900.jpg"
+        "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/498/1246067.jpg"
       }
     }
   ],
