@@ -10,9 +10,11 @@ import io.github.pablovns.util.LocalDateAdapter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +42,8 @@ public class ServicoTVMaze {
      * @throws InterruptedException Em caso de interrupção da requisição
      */
     public List<Serie> buscarSeries(String nome) throws IOException, InterruptedException {
-        String url = URL_BASE + "/search/shows?q=" + nome.replace(" ", "+");
+        String nomeSanitizado = URLEncoder.encode(nome, StandardCharsets.UTF_8);
+        String url = URL_BASE + "/search/shows?q=" + nomeSanitizado;
         HttpRequest requisicao = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .GET()
