@@ -214,6 +214,12 @@ public class TelaPrincipal extends JFrame {
 
         try {
             List<Serie> series = servicoTVMaze.buscarSeries(termo);
+            if (series.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                    "Nenhuma série encontrada!",
+                     "Falha ao buscar séries",
+                    JOptionPane.WARNING_MESSAGE);
+            }
             modeloTabela.setRowCount(0);
             for (Serie serie : series) {
                 modeloTabela.addRow(new Object[]{
@@ -233,7 +239,7 @@ public class TelaPrincipal extends JFrame {
                     "Operação interrompida: " + e.getMessage(),
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
-        }catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, 
                 "Erro ao buscar séries: " + e.getMessage(),
                 "Erro",
